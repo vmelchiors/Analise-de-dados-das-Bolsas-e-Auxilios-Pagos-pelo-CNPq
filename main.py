@@ -105,6 +105,7 @@ if __name__ == '__main__':
         st.pyplot(utils.graf_lines_moda(datas))
 
     with st.container():
+        
         st.divider()
         st.subheader("2.2 Exploração Dinamica do Dataframe")
         st.write("A partir do dataframe criado com os dados dos auxílios e bolsas pagos pelo CNPQ, aplicamos filtros "
@@ -115,6 +116,7 @@ if __name__ == '__main__':
                  "contempladas, a média e o desvio padrão do valor dos auxílios e bolsas, por meio da demonstração  "
                  "de tabelas, gráficos e diagramas.")
         st.divider()
+        
         st.subheader("2.2.1 Filtro")
         colect1, colect2, colect3 = st.columns(3)
         ano = colect1.selectbox("Selecione o ano", [2002, 2003, 2004, 2005, 2006, 2007,
