@@ -1,9 +1,7 @@
-import numba
 import pandas as pd
 import streamlit as st
 import numpy as np
 from matplotlib import pyplot as plt
-from numba import njit
 
 
 @st.cache_data
@@ -37,6 +35,8 @@ def frequency_table(data):
     tabela_frequencia = pd.cut(data, bins=classes, include_lowest=True, right=True)
     frequencia = tabela_frequencia.value_counts().reset_index()
     frequencia.columns = ['Classe', 'Frequência Absoluta']
+    frequencia['Limite Inferior'] = frequencia['Classe'].apply(lambda x: x.left)
+    frequencia = frequencia.sort_values(by='Limite Inferior')
     frequencia['Frequência Relativa'] = frequencia['Frequência Absoluta'] / n
     frequencia['Frequência Acumulada'] = frequencia['Frequência Absoluta'].cumsum()
     frequencia['Frequência Acumulada Relativa'] = frequencia['Frequência Acumulada'] / n
@@ -47,7 +47,9 @@ def frequency_table(data):
     frequencia['Frequência Absoluta'] = frequencia['Frequência Absoluta'].astype(int)
     frequencia['Variância x Frequência Absoluta'] = xi * frequencia['Frequência Absoluta']
     frequencia['Variância^2 x Frequência Absoluta'] = xi ** 2 * frequencia['Frequência Absoluta']
+
     return frequencia
+
 
 
 @st.cache_data
@@ -97,7 +99,6 @@ def describe_data_others(df):
     return data
 
 
-@njit
 def create_stem_and_leaf(data):
     ramos = [int(x / 10) for x in data]
     folhas = [x % 10 for x in data]
@@ -157,7 +158,7 @@ def plotar_grafico(x, y):
 @st.cache_data
 def cal_rf(ramos1, folhas1):
     for i in range(len(ramos1)):
-        numba.np([ramos1[i]] * len(folhas1[i]), sorted(folhas1[i]), linefmt='-', markerfmt='o', basefmt=' ')
+        np([ramos1[i]] * len(folhas1[i]), sorted(folhas1[i]), linefmt='-', markerfmt='o', basefmt=' ')
 
 
 @st.cache_data
